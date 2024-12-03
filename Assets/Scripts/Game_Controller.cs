@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Game_Controller : MonoBehaviour
 {
-    [SerializeField]
-    private Sprite BG_Image;
+    [SerializeField] private Sprite BG_Image;
+    [SerializeField] private GameObject endGamePanel; 
+    [SerializeField] private Button continueButton;
+    [SerializeField] private Button backToMenuButton; 
+
     public Sprite[] puzzles;
     public List<Sprite> gamePuzzles = new List<Sprite>();
     public List<Button> btns = new List<Button>();
@@ -22,6 +26,9 @@ public class Game_Controller : MonoBehaviour
 
     void Start()
     {
+        if (endGamePanel != null)
+            endGamePanel.SetActive(false);
+
         GetButtons();
         AddListeners();
         AddGamePuzzles();
@@ -76,16 +83,14 @@ public class Game_Controller : MonoBehaviour
     {
         foreach (Button btn in btns)
         {
-            btn.onClick.AddListener(() => pickPuzzle());
+            btn.onClick.AddListener(() => PickPuzzle());
         }
     }
 
-    void pickPuzzle()
+    void PickPuzzle()
     {
         Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         int clickedButtonIndex = btns.IndexOf(clickedButton);
-
-        Debug.Log("Button clicked: " + clickedButton.name);
 
         if (!firstGuess)
         {
@@ -113,8 +118,6 @@ public class Game_Controller : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (firstGuessPuzzle == secondGuessPuzzle)
         {
-            yield return new WaitForSeconds(0.05f);
-
             btns[firstGuessIndex].interactable = false;
             btns[secondGuessIndex].interactable = false;
 
@@ -125,8 +128,6 @@ public class Game_Controller : MonoBehaviour
         }
         else
         {
-            yield return new WaitForSeconds(0.05f);
-
             btns[firstGuessIndex].image.sprite = BG_Image;
             btns[secondGuessIndex].image.sprite = BG_Image;
         }
@@ -140,9 +141,39 @@ public class Game_Controller : MonoBehaviour
         if (countCorrectGuesses == gameGuesses)
         {
             Debug.Log("Game finished!!");
-            Debug.Log("It took you " + countGuesses + " guesses to finish the game.");
+
+            if (endGamePanel != null)
+            {
+                endGamePanel.SetActive(true);
+
+                continueButton.onClick.AddListener(ContinueToNextLevel);
+                backToMenuButton.onClick.AddListener(BackToMenu);
+
+            }
         }
     }
+
+    void ContinueToNextLevel()
+    {
+        if (endGamePanel != null)
+            endGamePanel.SetActive(false);
+
+        int currentLevel = PlayerPrefs.GetInt("UnlockedLevels", 1);
+
+        PlayerPrefs.SetInt("UnlockedLevels", currentLevel + 1);
+        PlayerPrefs.Save();
+
+        SceneManager.LoadScene("Level" + (currentLevel + 1));
+    }
+
+    void BackToMenu()
+    {
+        if (endGamePanel != null)
+            endGamePanel.SetActive(false);
+
+        SceneManager.LoadScene("Main");
+    }
+
 
     void Shuffle(List<Sprite> list)
     {
