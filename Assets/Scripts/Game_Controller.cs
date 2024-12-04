@@ -92,6 +92,13 @@ public class Game_Controller : MonoBehaviour
         Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         int clickedButtonIndex = btns.IndexOf(clickedButton);
 
+        // جلوگیری از انتخاب یک کارت دوبار
+        if (firstGuess && clickedButtonIndex == firstGuessIndex)
+        {
+            Debug.Log("Cannot click the same card twice!");
+            return;
+        }
+
         if (!firstGuess)
         {
             firstGuess = true;
@@ -112,6 +119,7 @@ public class Game_Controller : MonoBehaviour
             StartCoroutine(CheckThePuzzlesMatch());
         }
     }
+
 
     IEnumerator CheckThePuzzlesMatch()
     {
