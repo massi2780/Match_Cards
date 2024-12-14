@@ -156,14 +156,36 @@ public class Game_Controller : MonoBehaviour
             {
                 endGamePanel.SetActive(true);
 
-                continueButton.onClick.AddListener(ContinueToNextLevel);
+                ShowStars(); 
+                int earnedStars = CalculateStars();
+
+                if (earnedStars == 0)
+                {
+                    Debug.Log("No stars earned. Continue button disabled.");
+                    continueButton.interactable = false; 
+                }
+                else
+                {
+                    continueButton.interactable = true;
+                    continueButton.onClick.AddListener(ContinueToNextLevel);
+                }
+
                 backToMenuButton.onClick.AddListener(BackToMenu);
                 restartButton.onClick.AddListener(RestartLevel);
-
-                ShowStars(); 
             }
         }
     }
+
+    int CalculateStars()
+    {
+        if (countGuesses <= gameGuesses + 2)
+            return 3;
+        else if (countGuesses <= gameGuesses * 2)
+            return 2;
+        else
+            return 1;
+    }
+
     void ShowStars()
     {
         if (countGuesses <= gameGuesses + 2)
