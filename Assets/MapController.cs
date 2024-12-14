@@ -1,39 +1,46 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MapController : MonoBehaviour
 {
     [SerializeField] private GameObject mapPanel;
-    [SerializeField] private Button playButton; 
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button closeButton;
+    [SerializeField] private GameObject[] levelIcons;
 
-    [SerializeField] private Button closeButton; 
-    [SerializeField] private GameObject[] levelIcons; 
+    [Header("About Panel Elements")]
+    [SerializeField] private GameObject aboutPanel;   // پنل About
+    [SerializeField] private Button aboutButton;      // دکمه About
+    [SerializeField] private Button backButton;       // دکمه Back
 
-    private int unlockedLevels; 
-
+    private int unlockedLevels;
 
     void Start()
     {
         mapPanel.SetActive(false);
-        
-
         closeButton.gameObject.SetActive(false);
+
+        if (aboutPanel != null)
+            aboutPanel.SetActive(false);  
 
         foreach (var icon in levelIcons)
         {
-            icon.SetActive(false); 
+            icon.SetActive(false);
         }
-        playButton.onClick.AddListener(OpenMap); 
 
-        closeButton.onClick.AddListener(CloseMap); 
+        playButton.onClick.AddListener(OpenMap);
+        closeButton.onClick.AddListener(CloseMap);
 
+        if (aboutButton != null)
+            aboutButton.onClick.AddListener(OpenAboutPanel);
 
+        if (backButton != null)
+            backButton.onClick.AddListener(CloseAboutPanel);
 
         unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels", 1);
 
-        UpdateLevelIcons(); 
-
+        UpdateLevelIcons();
     }
 
     void OpenMap()
@@ -44,7 +51,6 @@ public class MapController : MonoBehaviour
             icon.SetActive(true);
         }
         closeButton.gameObject.SetActive(true);
-
     }
 
     void CloseMap()
@@ -54,9 +60,7 @@ public class MapController : MonoBehaviour
         {
             icon.SetActive(false);
         }
-
-        closeButton.gameObject.SetActive(false); 
-
+        closeButton.gameObject.SetActive(false);
     }
 
     void UpdateLevelIcons()
@@ -67,46 +71,45 @@ public class MapController : MonoBehaviour
 
             if (i < unlockedLevels)
             {
-
-                levelIcons[i].GetComponent<Image>().color = Color.white; 
-
-                levelButton.interactable = true; 
+                levelIcons[i].GetComponent<Image>().color = Color.white;
+                levelButton.interactable = true;
 
                 int levelIndex = i;
-
-                levelButton.onClick.AddListener(() => LoadLevel(levelIndex)); 
-
+                levelButton.onClick.AddListener(() => LoadLevel(levelIndex));
             }
             else
             {
-
                 levelIcons[i].GetComponent<Image>().color = Color.gray;
-
-                levelButton.interactable = false; 
-
+                levelButton.interactable = false;
             }
         }
     }
 
     void LoadLevel(int levelIndex)
     {
-        Debug.Log("Loading Level: " + levelIndex); 
-
-        SceneManager.LoadScene("Level" + (levelIndex + 1)); 
-
+        Debug.Log("Loading Level: " + levelIndex);
+        SceneManager.LoadScene("Level" + (levelIndex + 1));
     }
 
     public void UnlockNextLevel()
     {
-
         if (unlockedLevels < levelIcons.Length)
         {
             unlockedLevels++;
-
             PlayerPrefs.SetInt("UnlockedLevels", unlockedLevels);
-
-            PlayerPrefs.Save(); 
-
+            PlayerPrefs.Save();
         }
+    }
+
+    void OpenAboutPanel()
+    {
+        if (aboutPanel != null)
+            aboutPanel.SetActive(true);
+    }
+
+    void CloseAboutPanel()
+    {
+        if (aboutPanel != null)
+            aboutPanel.SetActive(false);
     }
 }
