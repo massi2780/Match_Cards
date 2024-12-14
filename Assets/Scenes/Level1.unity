@@ -1147,7 +1147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f324529c01c8748993d5a9178d6453, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BG_Image: {fileID: 21300000, guid: bf6a5736a1d3c5c4fa1bdff6a4a06f1d, type: 3}
+  BG_Image: {fileID: 21300000, guid: 966989be4f142c0448fc188fc8722b93, type: 3}
   endGamePanel: {fileID: 2113473587}
   continueButton: {fileID: 1057748738}
   backToMenuButton: {fileID: 1516877165}
