@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Game_Controller : MonoBehaviour
 {
     [SerializeField] private Sprite BG_Image;
-    [SerializeField] private GameObject endGamePanel; 
+    [SerializeField] private GameObject endGamePanel;
     [SerializeField] private Button continueButton;
-    [SerializeField] private Button backToMenuButton; 
+    [SerializeField] private Button backToMenuButton;
+    [SerializeField] private Button restartButton; // دکمه ریستارت
 
     public Sprite[] puzzles;
     public List<Sprite> gamePuzzles = new List<Sprite>();
@@ -92,7 +93,6 @@ public class Game_Controller : MonoBehaviour
         Button clickedButton = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
         int clickedButtonIndex = btns.IndexOf(clickedButton);
 
-        // جلوگیری از انتخاب یک کارت دوبار
         if (firstGuess && clickedButtonIndex == firstGuessIndex)
         {
             Debug.Log("Cannot click the same card twice!");
@@ -119,7 +119,6 @@ public class Game_Controller : MonoBehaviour
             StartCoroutine(CheckThePuzzlesMatch());
         }
     }
-
 
     IEnumerator CheckThePuzzlesMatch()
     {
@@ -156,7 +155,7 @@ public class Game_Controller : MonoBehaviour
 
                 continueButton.onClick.AddListener(ContinueToNextLevel);
                 backToMenuButton.onClick.AddListener(BackToMenu);
-
+                restartButton.onClick.AddListener(RestartLevel); // اتصال دکمه ریستارت
             }
         }
     }
@@ -182,6 +181,13 @@ public class Game_Controller : MonoBehaviour
         SceneManager.LoadScene("Main");
     }
 
+    void RestartLevel()
+    {
+        if (endGamePanel != null)
+            endGamePanel.SetActive(false);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // ریستارت لول
+    }
 
     void Shuffle(List<Sprite> list)
     {
