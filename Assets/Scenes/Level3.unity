@@ -354,7 +354,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 7.600009, y: 70.00003}
+  m_AnchoredPosition: {x: 7.600006, y: 70.00003}
   m_SizeDelta: {x: -157.6001, y: -1070.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &672019985
@@ -1226,9 +1226,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BG_Image: {fileID: 21300000, guid: 788201b6c7a96424cacaf354d2159a7f, type: 3}
-  endGamePanel: {fileID: 0}
-  continueButton: {fileID: 0}
-  backToMenuButton: {fileID: 0}
+  endGamePanel: {fileID: 672019983}
+  continueButton: {fileID: 829746166}
+  backToMenuButton: {fileID: 1301079787}
   puzzles:
   - {fileID: 21300000, guid: 938afea832540af49bd7002a0de9d8b8, type: 3}
   - {fileID: 21300000, guid: 39695c0beda1e524284d4228f59e22b9, type: 3}
