@@ -11,6 +11,9 @@ public class Game_Controller : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private Button backToMenuButton;
     [SerializeField] private Button restartButton; // دکمه ریستارت
+    [SerializeField] private Image[] stars; 
+    [SerializeField] private Sprite filledStar; 
+    [SerializeField] private Sprite emptyStar;
 
     public Sprite[] puzzles;
     public List<Sprite> gamePuzzles = new List<Sprite>();
@@ -155,7 +158,39 @@ public class Game_Controller : MonoBehaviour
 
                 continueButton.onClick.AddListener(ContinueToNextLevel);
                 backToMenuButton.onClick.AddListener(BackToMenu);
-                restartButton.onClick.AddListener(RestartLevel); // اتصال دکمه ریستارت
+                restartButton.onClick.AddListener(RestartLevel);
+
+                ShowStars(); 
+            }
+        }
+    }
+    void ShowStars()
+    {
+        if (countGuesses <= gameGuesses + 2)
+        {
+            DisplayStars(3);
+        }
+        else if (countGuesses <= gameGuesses * 2) 
+        {
+            DisplayStars(2);
+        }
+        else 
+        {
+            DisplayStars(1);
+        }
+    }
+
+    void DisplayStars(int starCount)
+    {
+        for (int i = 0; i < stars.Length; i++)
+        {
+            if (i < starCount)
+            {
+                stars[i].sprite = filledStar;
+            }
+            else
+            {
+                stars[i].sprite = emptyStar;
             }
         }
     }
