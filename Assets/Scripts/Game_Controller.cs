@@ -162,13 +162,13 @@ public class Game_Controller : MonoBehaviour
                 if (earnedStars == 0)
                 {
                     Debug.Log("No stars earned. Continue button disabled.");
-                    continueButton.interactable = false; 
+                    continueButton.interactable = false;
                 }
                 else
                 {
                     continueButton.interactable = true;
-                    continueButton.onClick.AddListener(ContinueToNextLevel);
                 }
+                
 
                 backToMenuButton.onClick.AddListener(BackToMenu);
                 restartButton.onClick.AddListener(RestartLevel);
@@ -178,28 +178,24 @@ public class Game_Controller : MonoBehaviour
 
     int CalculateStars()
     {
-        if (countGuesses <= gameGuesses + 2)
+        if (countGuesses <= gameGuesses + 1) 
+
             return 3;
-        else if (countGuesses <= gameGuesses * 2)
+        else if (countGuesses <= gameGuesses + 3) 
+
             return 2;
-        else
+        else if (countGuesses <= gameGuesses + 5) 
+
             return 1;
+        else
+            return 0; 
+
     }
 
     void ShowStars()
     {
-        if (countGuesses <= gameGuesses + 2)
-        {
-            DisplayStars(3);
-        }
-        else if (countGuesses <= gameGuesses * 2) 
-        {
-            DisplayStars(2);
-        }
-        else 
-        {
-            DisplayStars(1);
-        }
+        int earnedStars = CalculateStars();
+        DisplayStars(earnedStars);
     }
 
     void DisplayStars(int starCount)
