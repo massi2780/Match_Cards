@@ -87,9 +87,18 @@ public class MapController : MonoBehaviour
 
     void LoadLevel(int levelIndex)
     {
-        Debug.Log("Loading Level: " + levelIndex);
-        SceneManager.LoadScene("Level" + (levelIndex + 1));
+        if (levelIndex >= 5)
+        {
+            Debug.Log("All levels completed! Loading EndGame.");
+            SceneManager.LoadScene("EndGame");
+        }
+        else
+        {
+            Debug.Log("Loading Level: " + levelIndex);
+            SceneManager.LoadScene("Level" + (levelIndex + 1));
+        }
     }
+
 
     public void UnlockNextLevel()
     {

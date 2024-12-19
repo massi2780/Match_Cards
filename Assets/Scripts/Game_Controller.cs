@@ -10,10 +10,16 @@ public class Game_Controller : MonoBehaviour
     [SerializeField] private GameObject endGamePanel;
     [SerializeField] private Button continueButton;
     [SerializeField] private Button backToMenuButton;
-    [SerializeField] private Button restartButton; // دکمه ریستارت
-    [SerializeField] private Image[] stars; 
-    [SerializeField] private Sprite filledStar; 
+    [SerializeField] private Button restartButton;
+    [SerializeField] private Image[] stars;
+    [SerializeField] private Sprite filledStar;
     [SerializeField] private Sprite emptyStar;
+
+    [SerializeField] private float gameTime = 50f;
+    [SerializeField] private Text timerText;
+    [SerializeField] private GameObject TimerText;
+
+    private bool timerIsRunning = true;
 
     public Sprite[] puzzles;
     public List<Sprite> gamePuzzles = new List<Sprite>();
@@ -145,18 +151,73 @@ public class Game_Controller : MonoBehaviour
         firstGuess = secondGuess = false;
     }
 
+    void Update()
+    {
+        if (timerIsRunning)
+        {
+            if (gameTime > 0)
+            {
+                gameTime -= Time.deltaTime;
+                UpdateTimerUI(gameTime);
+            }
+            else
+            {
+                gameTime = 0;
+                timerIsRunning = false;
+                TimeUp();
+            }
+        }
+    }
+
+    void TimeUp()
+    {
+        Debug.Log("Time is up! Game over.");
+
+        if (TimerText != null)
+            TimerText.SetActive(false);
+       
+
+
+
+        if (endGamePanel != null)
+        {
+            endGamePanel.SetActive(true);
+
+            DisplayStars(0);
+            continueButton.interactable = false;
+
+            backToMenuButton.onClick.AddListener(BackToMenu); // تعریف عملکرد بازگشت به منو
+            restartButton.onClick.AddListener(RestartLevel); // تعریف عملکرد بازنشانی بازی
+        }
+
+        foreach (Button btn in btns)
+        {
+            btn.interactable = false;
+        }
+    }
+
+
+    void UpdateTimerUI(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+    }
+
     void CheckTheGameIsFinished()
     {
         countCorrectGuesses++;
         if (countCorrectGuesses == gameGuesses)
         {
+            timerIsRunning = false;
+
             Debug.Log("Game finished!!");
 
             if (endGamePanel != null)
             {
                 endGamePanel.SetActive(true);
 
-                ShowStars(); 
+                ShowStars();
                 int earnedStars = CalculateStars();
 
                 if (earnedStars == 0)
@@ -167,8 +228,8 @@ public class Game_Controller : MonoBehaviour
                 else
                 {
                     continueButton.interactable = true;
+                    continueButton.onClick.AddListener(ContinueToNextLevel);
                 }
-                
 
                 backToMenuButton.onClick.AddListener(BackToMenu);
                 restartButton.onClick.AddListener(RestartLevel);
@@ -178,18 +239,14 @@ public class Game_Controller : MonoBehaviour
 
     int CalculateStars()
     {
-        if (countGuesses <= gameGuesses + 1) 
-
+        if (countGuesses <= gameGuesses + 1)
             return 3;
-        else if (countGuesses <= gameGuesses + 3) 
-
+        else if (countGuesses <= gameGuesses + 3)
             return 2;
-        else if (countGuesses <= gameGuesses + 5) 
-
+        else if (countGuesses <= gameGuesses + 5)
             return 1;
         else
-            return 0; 
-
+            return 0;
     }
 
     void ShowStars()
@@ -239,7 +296,7 @@ public class Game_Controller : MonoBehaviour
         if (endGamePanel != null)
             endGamePanel.SetActive(false);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // ریستارت لول
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     void Shuffle(List<Sprite> list)
