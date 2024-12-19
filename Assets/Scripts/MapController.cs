@@ -10,11 +10,12 @@ public class MapController : MonoBehaviour
     [SerializeField] private GameObject[] levelIcons;
 
     [Header("About Panel Elements")]
-    [SerializeField] private GameObject aboutPanel;   // پنل About
-    [SerializeField] private Button aboutButton;      // دکمه About
-    [SerializeField] private Button backButton;       // دکمه Back
+    [SerializeField] private GameObject aboutPanel;
+    [SerializeField] private Button aboutButton;
+    [SerializeField] private Button backButton;
 
     private int unlockedLevels;
+    private Saver saver;
 
     void Start()
     {
@@ -22,11 +23,22 @@ public class MapController : MonoBehaviour
         closeButton.gameObject.SetActive(false);
 
         if (aboutPanel != null)
-            aboutPanel.SetActive(false);  
+            aboutPanel.SetActive(false);
 
         foreach (var icon in levelIcons)
         {
             icon.SetActive(false);
+        }
+
+        saver = FindObjectOfType<Saver>();
+        if (saver != null)
+        {
+            saver.Load_Datas();
+            unlockedLevels = saver.Data_object.UnlockedLevel;
+        }
+        else
+        {
+            unlockedLevels = 1;
         }
 
         playButton.onClick.AddListener(OpenMap);
@@ -37,8 +49,6 @@ public class MapController : MonoBehaviour
 
         if (backButton != null)
             backButton.onClick.AddListener(CloseAboutPanel);
-
-        unlockedLevels = PlayerPrefs.GetInt("UnlockedLevels", 1);
 
         UpdateLevelIcons();
     }
@@ -75,6 +85,7 @@ public class MapController : MonoBehaviour
                 levelButton.interactable = true;
 
                 int levelIndex = i;
+                levelButton.onClick.RemoveAllListeners();
                 levelButton.onClick.AddListener(() => LoadLevel(levelIndex));
             }
             else
@@ -99,16 +110,29 @@ public class MapController : MonoBehaviour
         }
     }
 
-
     public void UnlockNextLevel()
     {
         if (unlockedLevels < levelIcons.Length)
         {
             unlockedLevels++;
-            PlayerPrefs.SetInt("UnlockedLevels", unlockedLevels);
-            PlayerPrefs.Save();
+            if (saver != null)
+            {
+                saver.Data_object.UnlockedLevel = unlockedLevels;
+                saver.Save_Datas();
+            }
+            else
+            {
+                Debug.LogError("Saver instance not found! Data won't be saved.");
+            }
+
+            UpdateLevelIcons();
         }
     }
+    public void UnlockNextLevelInMap()
+    {
+        UpdateLevelIcons();
+    }
+
 
     void OpenAboutPanel()
     {

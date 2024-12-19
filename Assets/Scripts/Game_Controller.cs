@@ -15,7 +15,7 @@ public class Game_Controller : MonoBehaviour
     [SerializeField] private Sprite filledStar;
     [SerializeField] private Sprite emptyStar;
 
-    [SerializeField] private float gameTime = 50f;
+    [SerializeField] private float gameTime = 60f;
     [SerializeField] private Text timerText;
     [SerializeField] private GameObject TimerText;
 
@@ -33,12 +33,22 @@ public class Game_Controller : MonoBehaviour
     private int firstGuessIndex, secondGuessIndex;
 
     private string firstGuessPuzzle, secondGuessPuzzle;
+  //  public Saver saver;
 
     void Start()
     {
         if (endGamePanel != null)
             endGamePanel.SetActive(false);
 
+        Saver saver = FindObjectOfType<Saver>();
+        if (saver != null)
+        {
+            saver.Load_Datas();
+            int currentLevel = saver.Data_object.UnlockedLevel;
+            Debug.Log("Current Level Loaded: Level" + currentLevel);
+        }
+
+        // ادامه‌ی کد قبلی...
         GetButtons();
         AddListeners();
         AddGamePuzzles();
@@ -48,6 +58,7 @@ public class Game_Controller : MonoBehaviour
         StartCoroutine(ShowCardsTemporarily());
     }
 
+
     IEnumerator ShowCardsTemporarily()
     {
         for (int i = 0; i < btns.Count; i++)
@@ -55,7 +66,7 @@ public class Game_Controller : MonoBehaviour
             btns[i].image.sprite = gamePuzzles[i];
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
 
         for (int i = 0; i < btns.Count; i++)
         {
@@ -186,8 +197,11 @@ public class Game_Controller : MonoBehaviour
             DisplayStars(0);
             continueButton.interactable = false;
 
-            backToMenuButton.onClick.AddListener(BackToMenu); // تعریف عملکرد بازگشت به منو
-            restartButton.onClick.AddListener(RestartLevel); // تعریف عملکرد بازنشانی بازی
+            backToMenuButton.onClick.AddListener(BackToMenu);
+
+
+            restartButton.onClick.AddListener(RestartLevel);
+
         }
 
         foreach (Button btn in btns)
@@ -275,13 +289,44 @@ public class Game_Controller : MonoBehaviour
         if (endGamePanel != null)
             endGamePanel.SetActive(false);
 
-        int currentLevel = PlayerPrefs.GetInt("UnlockedLevels", 1);
 
-        PlayerPrefs.SetInt("UnlockedLevels", currentLevel + 1);
-        PlayerPrefs.Save();
+        Saver saver = FindObjectOfType<Saver>();
+        if (saver != null)
+        {
+            saver.Load_Datas();
 
-        SceneManager.LoadScene("Level" + (currentLevel + 1));
+
+            saver.Data_object.UnlockedLevel++;
+            saver.Save_Datas();
+
+
+            MapController mapController = FindObjectOfType<MapController>();
+            if (mapController != null)
+            {
+                mapController.UnlockNextLevelInMap(); 
+
+            }
+
+
+            int nextLevel = saver.Data_object.UnlockedLevel;
+            if (nextLevel > 5) 
+
+            {
+                SceneManager.LoadScene("endGame");
+
+            }
+            else
+            {
+                SceneManager.LoadScene("Level" + nextLevel); 
+
+            }
+        }
+        else
+        {
+            Debug.LogError("Saver not found!");
+        }
     }
+
 
     void BackToMenu()
     {
@@ -289,6 +334,7 @@ public class Game_Controller : MonoBehaviour
             endGamePanel.SetActive(false);
 
         SceneManager.LoadScene("Main");
+
     }
 
     void RestartLevel()

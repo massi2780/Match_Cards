@@ -1034,6 +1034,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1516877163}
   m_CullTransparentMesh: 1
+--- !u!1 &1635465798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1635465800}
+  - component: {fileID: 1635465799}
+  m_Layer: 0
+  m_Name: "\u064FSaver"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1635465799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635465798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bc82d64214c8404eb3c112f1529466d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data_object:
+    UnlockedLevel: 1
+--- !u!4 &1635465800
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1635465798}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3897741, y: 2.1206453, z: 2921.879}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1733606558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1648,6 +1694,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 5b79af00d5c09b748b7f2fe0c01f6eb5, type: 3}
   gamePuzzles: []
   btns: []
+  saver: {fileID: 0}
 --- !u!1 &2113473587
 GameObject:
   m_ObjectHideFlags: 0
