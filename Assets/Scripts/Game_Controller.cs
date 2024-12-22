@@ -15,9 +15,10 @@ public class Game_Controller : MonoBehaviour
     [SerializeField] private Sprite filledStar;
     [SerializeField] private Sprite emptyStar;
 
-    [SerializeField] private float gameTime = 60f;
+    [SerializeField] private float gameTime = 80f;
     [SerializeField] private Text timerText;
     [SerializeField] private GameObject TimerText;
+    [SerializeField] private GameObject puzzleField;
 
     private bool timerIsRunning = true;
 
@@ -186,6 +187,10 @@ public class Game_Controller : MonoBehaviour
 
         if (TimerText != null)
             TimerText.SetActive(false);
+       
+        
+        if (puzzleField != null)
+            puzzleField.SetActive(false);
        
 
 

@@ -1678,9 +1678,10 @@ MonoBehaviour:
   - {fileID: 342786973}
   filledStar: {fileID: 21300000, guid: d8102e4338e444249ba3fe28bb8552e8, type: 3}
   emptyStar: {fileID: 21300000, guid: 4981b419cbb439d44923a78e54bd7148, type: 3}
-  gameTime: 50
+  gameTime: 80
   timerText: {fileID: 559282456}
   TimerText: {fileID: 1395291478}
+  puzzleField: {fileID: 54854340}
   puzzles:
   - {fileID: 21300000, guid: 7eca3856a0f30c848b291796bbc0f4b8, type: 3}
   - {fileID: 21300000, guid: 5ef7b3fc2dff1c6448daa10b8f3c4636, type: 3}
