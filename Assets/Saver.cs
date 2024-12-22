@@ -55,7 +55,7 @@ public class Saver : MonoBehaviour
         {
             
             string filepath = Application.persistentDataPath + "/Saved_Data.json";
-          // File.Delete(filepath);
+         // File.Delete(filepath);
             if (File.Exists(filepath))
             {
                 string Save_object_Datas = System.IO.File.ReadAllText(filepath);

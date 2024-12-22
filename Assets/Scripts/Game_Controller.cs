@@ -67,7 +67,7 @@ public class Game_Controller : MonoBehaviour
             btns[i].image.sprite = gamePuzzles[i];
         }
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(4f);
 
         for (int i = 0; i < btns.Count; i++)
         {
