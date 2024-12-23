@@ -1319,8 +1319,8 @@ RectTransform:
   m_Children:
   - {fileID: 1523631508}
   - {fileID: 1633584884}
-  - {fileID: 1788808144}
   - {fileID: 1481616407}
+  - {fileID: 1788808144}
   - {fileID: 679554699}
   - {fileID: 333415771}
   m_Father: {fileID: 323761950}
@@ -1552,8 +1552,8 @@ MonoBehaviour:
   levelIcons:
   - {fileID: 1523631507}
   - {fileID: 1633584883}
-  - {fileID: 1788808143}
   - {fileID: 1481616406}
+  - {fileID: 1788808143}
   - {fileID: 679554695}
   aboutPanel: {fileID: 1319361874}
   aboutButton: {fileID: 2038083560}
@@ -1743,7 +1743,7 @@ GameObject:
   - component: {fileID: 1481616409}
   - component: {fileID: 1481616408}
   m_Layer: 5
-  m_Name: Leve4
+  m_Name: Leve3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1767,7 +1767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -78, y: -146}
+  m_AnchoredPosition: {x: 184, y: 99}
   m_SizeDelta: {x: 150, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1481616408
@@ -2109,7 +2109,7 @@ GameObject:
   - component: {fileID: 1788808146}
   - component: {fileID: 1788808145}
   m_Layer: 5
-  m_Name: Leve3
+  m_Name: Leve4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2133,7 +2133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 188, y: 97}
+  m_AnchoredPosition: {x: -110, y: -147}
   m_SizeDelta: {x: 150, y: 170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1788808145

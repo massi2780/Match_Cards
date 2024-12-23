@@ -49,7 +49,6 @@ public class Game_Controller : MonoBehaviour
             Debug.Log("Current Level Loaded: Level" + currentLevel);
         }
 
-        // ادامه‌ی کد قبلی...
         GetButtons();
         AddListeners();
         AddGamePuzzles();
@@ -258,15 +257,27 @@ public class Game_Controller : MonoBehaviour
 
     int CalculateStars()
     {
-        if (countGuesses <= gameGuesses + 1)
-            return 3;
-        else if (countGuesses <= gameGuesses + 3)
-            return 2;
-        else if (countGuesses <= gameGuesses + 5)
-            return 1;
-        else
-            return 0;
+        int timeScore = 0;
+        int guessScore = 0;
+
+        if (gameTime > 60)
+            timeScore = 3;
+        else if (gameTime > 30)
+            timeScore = 2;
+        else if (gameTime > 0)
+            timeScore = 1;
+
+        if (countGuesses <= gameGuesses + 10)
+            guessScore = 3;
+        else if (countGuesses <= gameGuesses + 15)
+            guessScore = 2;
+        else if (countGuesses <= gameGuesses + 20) 
+            guessScore = 1;
+
+        int finalScore = Mathf.Min(timeScore, guessScore);
+        return finalScore;
     }
+
 
     void ShowStars()
     {
